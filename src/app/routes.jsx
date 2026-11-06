@@ -2,11 +2,12 @@ import AppLayout from './layout/AppLayout.jsx'
 import HomePage from '../features/home/HomePage.jsx'
 import PlaceholderPage from '../features/placeholder/PlaceholderPage.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
+import RegisterPage from '../features/auth/RegisterPage.jsx'
 import NotFoundPage from '../features/home/NotFoundPage.jsx'
 
 export const appRoutes = [
   { path: '/login', element: <LoginPage /> },
-  { path: '/register', element: <PlaceholderPage title="Create an account" description="Registration will be added in the next authentication delivery." /> },
+  { path: '/register', element: <RegisterPage /> },
   {
     element: <AppLayout />,
     children: [
