@@ -1,51 +1,47 @@
-import { ArrowUpRight, ShieldCheck, Wallet, Workflow } from 'lucide-react'
+import { ArrowRight, ShieldCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { appConfig } from '../../shared/constants/appConfig.js'
 import Badge from '../../shared/components/Badge.jsx'
 import Card from '../../shared/components/Card.jsx'
 import PageHeader from '../../shared/components/PageHeader.jsx'
-import StatCard from '../../shared/components/StatCard.jsx'
-
-const highlights = [
-  { label: 'Account balances', detail: 'Account overview will appear here', icon: Wallet, tone: 'emerald' },
-  { label: 'Money movement', detail: 'Deposits and transfers are not enabled yet', icon: Workflow, tone: 'sky' },
-  { label: 'Ledger integrity', detail: 'Every posting will be traceable', icon: ShieldCheck, tone: 'violet' },
-]
+import MetricCard from '../dashboard/components/MetricCard.jsx'
+import MovementChart from '../dashboard/components/MovementChart.jsx'
+import RecentActivity from '../dashboard/components/RecentActivity.jsx'
+import { dashboardMetrics } from '../dashboard/data/dashboardData.js'
 
 export default function HomePage() {
   return (
-    <div className="space-y-8">
-      <Card className="overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/50" contentClassName="p-6 sm:p-8">
-        <div className="flex flex-wrap items-start justify-between gap-5">
-          <PageHeader
-            eyebrow={`${appConfig.name} · Day 1`}
-            title="Money movement you can prove."
-            description="A clear workspace for accounts, transactions and an append-only financial record. We are building the interface before enabling money operations."
-          />
-          <Badge tone="success">Setup 04/25</Badge>
-        </div>
-      </Card>
+    <div className="space-y-7">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <PageHeader
+          eyebrow={`${appConfig.name} · Dashboard`}
+          title="Good overview. Clear records."
+          description="A snapshot of account activity and money movement for the LedgerBalance workspace."
+        />
+        <Badge tone="warning">Demo data only</Badge>
+      </div>
 
-      <section className="space-y-4">
-        <div>
-          <h2 className="text-lg font-semibold text-slate-100">Workspace modules</h2>
-          <p className="mt-1 text-sm text-slate-500">Reusable interface components now power the overview cards.</p>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {highlights.map(({ label, detail, icon: Icon, tone }) => (
-            <StatCard key={label} label={label} value="Coming soon" detail={detail} icon={Icon} tone={tone} />
-          ))}
-        </div>
+      <section aria-label="Financial summary" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {dashboardMetrics.map((metric) => <MetricCard key={metric.label} metric={metric} />)}
       </section>
 
-      <Card title="Safety-first development" description="Financial controls are being built separately from presentation components.">
-        <div className="flex items-start gap-3">
-          <ShieldCheck className="mt-0.5 shrink-0 text-emerald-300" size={20} />
-          <div>
-            <p className="text-sm leading-6 text-slate-400">This version is a frontend shell only. It does not create accounts, store balances or move money. Those operations must be enforced by database transactions and server-side authorization.</p>
-            <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-slate-500">Integrity work is planned separately <ArrowUpRight size={13} /></div>
+      <section className="grid gap-5 xl:grid-cols-[1.35fr_1fr]">
+        <MovementChart />
+        <Card title="Integrity status" description="Current implementation status">
+          <div className="flex items-start gap-3 rounded-xl border border-amber-400/20 bg-amber-400/5 p-4">
+            <ShieldCheck className="mt-0.5 shrink-0 text-amber-300" size={20} />
+            <div>
+              <p className="font-medium text-slate-200">Financial operations are not enabled</p>
+              <p className="mt-1 text-sm leading-6 text-slate-400">These dashboard figures are static sample data. No deposits, withdrawals or transfers can be performed in this delivery.</p>
+            </div>
           </div>
-        </div>
-      </Card>
+          <Link to="/accounts" className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-emerald-300 hover:text-emerald-200">
+            Explore account module <ArrowRight size={15} />
+          </Link>
+        </Card>
+      </section>
+
+      <RecentActivity />
     </div>
   )
 }
