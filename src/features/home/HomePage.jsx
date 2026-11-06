@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { ArrowRight, ShieldCheck } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { appConfig } from '../../shared/constants/appConfig.js'
 import Badge from '../../shared/components/Badge.jsx'
 import Card from '../../shared/components/Card.jsx'
@@ -10,6 +10,8 @@ import MovementChart from '../dashboard/components/MovementChart.jsx'
 import RecentActivity from '../dashboard/components/RecentActivity.jsx'
 import SummaryPeriodSelect from '../dashboard/components/SummaryPeriodSelect.jsx'
 import AccountBalanceBreakdown from '../dashboard/components/AccountBalanceBreakdown.jsx'
+import DashboardQuickLinks from '../dashboard/components/DashboardQuickLinks.jsx'
+import DashboardDataNotice from '../dashboard/components/DashboardDataNotice.jsx'
 import { summaryPeriods } from '../dashboard/data/summaryData.js'
 
 export default function HomePage() {
@@ -34,14 +36,15 @@ export default function HomePage() {
         {selectedSummary.metrics.map((metric) => <MetricCard key={metric.label} metric={metric} />)}
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.15fr_1fr]">
+      <section className="grid gap-5 xl:grid-cols-[1.15fr_1fr]" aria-label="Account allocation and implementation status">
         <AccountBalanceBreakdown />
         <Card title="Integrity status" description="Current implementation status">
           <div className="flex items-start gap-3 rounded-xl border border-amber-400/20 bg-amber-400/5 p-4">
-            <ShieldCheck className="mt-0.5 shrink-0 text-amber-300" size={20} />
             <div>
               <p className="font-medium text-slate-200">Financial operations are not enabled</p>
-              <p className="mt-1 text-sm leading-6 text-slate-400">These dashboard figures are static sample data. No deposits, withdrawals or transfers can be performed in this delivery.</p>
+              <p className="mt-1 text-sm leading-6 text-slate-400">
+                These dashboard figures are static sample data. No deposits, withdrawals or transfers can be performed in this delivery.
+              </p>
             </div>
           </div>
           <Link to="/accounts" className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-emerald-300 hover:text-emerald-200">
@@ -50,7 +53,7 @@ export default function HomePage() {
         </Card>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.35fr_1fr]">
+      <section className="grid gap-5 xl:grid-cols-[1.35fr_1fr]" aria-label="Money movement and summary note">
         <MovementChart />
         <Card title="Summary note" description="How to read these figures">
           <p className="text-sm leading-6 text-slate-400">
@@ -60,6 +63,8 @@ export default function HomePage() {
       </section>
 
       <RecentActivity />
+      <DashboardQuickLinks />
+      <DashboardDataNotice />
     </div>
   )
 }
